@@ -14,14 +14,11 @@ import discord
 from discord import Interaction
 from discord.app_commands import CommandTree
 from discord.ext import commands, tasks
-from javascriptasync import JSContext
-from javascriptasync.logging import get_filehandler, setup_logging
 from sqlalchemy.exc import IntegrityError
 
 import gui
 from utility import Chelp, MessageTemplates, replace_working_directory
 import database
-from .PlaywrightAPI import PlaywrightMixin
 from .StatusMessages import StatusMessage, StatusMessageManager, StatusMessageMixin
 from .Tasks.TCTasks import TCTaskManager
 from .TCAppCommandAutoSync import Guild_Sync_Base, SpecialAppSync
@@ -96,14 +93,13 @@ class TCBot(
     StatusTicker,
     StatusMessageMixin,
     SpecialAppSync,
-    PlaywrightMixin,
 ):
     """A new central bot class.
     An extension of discord.py's Bot class with additional functionality."""
 
     def __init__(self, guimode=False):
         super().__init__(
-            command_prefix=["tc>", ">"],
+            command_prefix=["DO_NOT_USE>"],
             tree_cls=TreeOverride,
             help_command=Chelp(),
             intents=intent,
@@ -121,9 +117,6 @@ class TCBot(
         # GPT Mode
         self.gptapi = None
         self.embedding = None
-
-        print("JS CONTEXT setup")
-        self.jsenv: JSContext = JSContext()
 
         print("done")
         self.config: ConfigParserSub = ConfigParserSub()
@@ -161,10 +154,6 @@ class TCBot(
         """This function is called in on_ready, but only once."""
         if not self.bot_ready:
             # Start up the GuiPanel
-            await self.jsenv.init_js_a()
-            setup_logging(
-                logging.DEBUG, handler=get_filehandler(log_level=logging.DEBUG)
-            )
             guimode = self.config.getbool("gui")
             debugmode = self.config.getbool("debug")
             gptapi_mode = self.config.getbool("gpt")
@@ -209,11 +198,6 @@ class TCBot(
 
             self.bot_ready = True
 
-            # start playwright
-            pmode = self.config.getboolean("feature", "playwright")
-            print("playwrighter", pmode)
-            # if pmode == True:
-            #    await self.start_player()
             now = datetime.datetime.now()
             seconds_until_next_minute = (60 - now.second) % 20
             gui.gprint("sleeping for ", seconds_until_next_minute)
@@ -233,22 +217,9 @@ class TCBot(
         self.delete_queue_message.cancel()
         self.check_tc_tasks.cancel()
         self.status_ticker.cancel()
-        del self.jsenv
         # close the gui
         if self.gui:
             await self.gui.kill()
-        if self.playapi:
-            try:
-                try:
-                    await asyncio.wait_for(self.close_browser(), timeout=8)
-                except Exception as ex:
-                    print("rt", ex)
-                print("done closing.")
-                await self.playapi.stop()
-                print()
-            except Exception as e:
-                # l=logging.getLogger("TCLogger")
-                self.logs.error(str(e), exc_info=e)
         print("close done?")
 
         await super().close()

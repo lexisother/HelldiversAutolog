@@ -41,41 +41,6 @@ async def opening():
     gui.gprint("OK.")
 
 
-@bot.check
-async def is_cog_enabled(ctx: commands.Context):
-    if ctx.guild:
-        if ctx.command.cog:
-            if ctx.command.cog.qualified_name == "Main":
-                return True
-            entry = GuildCogToggle.get(ctx.guild.id, ctx.command.cog)
-            if entry:
-                if entry.enabled:
-                    return True
-            return False
-    return True
-
-
-@bot.check
-async def user_wants_ignore(ctx: commands.Context):
-    """ignore commands if the user doesn't want them."""
-    uid = ctx.author.id
-    if dbmain.Users_DoNotTrack.check_entry(uid):
-        return False
-    return True
-
-
-@bot.check
-async def guildcheck(ctx):
-    if ctx.guild != None:
-        serverdata = dbmain.ServerData.get_or_new(ctx.guild.id)
-        serverdata.update_last_time()
-        if ctx.command.extras:
-            if "guildtask" in ctx.command.extras and ctx.guild != None:
-                if taskflags[str(ctx.guild.id)]:
-                    return False
-    return True
-
-
 @bot.on_error
 async def on_error(event_method: str, /, *args: Any, **kwargs: Any):
     gui.gprint("Error?")
@@ -226,11 +191,6 @@ class Main(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         Guild_Task_Functions.add_task_function("TESTET", self.tester)
-
-    async def cog_check(self, ctx):
-        if ctx.author.id == ctx.bot.application.owner.id:
-            return True
-        return False
 
     async def tester(self, source_message=None):
         """example TC Guild task."""
@@ -515,13 +475,6 @@ async def main(args):
         gui.DataStore.initialize_default_values()
 
         if config != None:
-            g = keys.get("optional", "google", fallback=None)
-            c = keys.get("optional", "cse_id", fallback=None)
-            pal = keys.get("optional", "palapi", fallback=None)
-            bot.keys["google"] = g
-            bot.keys["cse"] = c
-            bot.keys["palapi"] = pal
-
             await bot.start(get_token(keys))
         return bot.exit_status
         print("DONE with startup.")

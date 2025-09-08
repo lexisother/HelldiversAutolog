@@ -7,10 +7,6 @@ import re
 import discord
 from discord import app_commands
 from discord.ext import commands
-from gptfunctionutil import (
-    AILibFunction,
-    LibParam,
-)
 import cogs.HD2 as hd2
 import hd2api
 from discord.app_commands import Choice
@@ -518,16 +514,6 @@ class HelldiversMathCog(commands.Cog, TC_Cog_Mixin):
 
             writer.writerow(row)
 
-    @AILibFunction(
-        name="galactic_war_status",
-        description="Get the current state of the galactic war",
-        enabled=True,
-        force_words=["galactic war"],
-        required=["comment"],
-    )
-    @LibParam(
-        comment="An interesting, amusing remark.",
-    )
     @commands.command(
         name="galactic_war_status",
         description="Get the current state of the galactic war",

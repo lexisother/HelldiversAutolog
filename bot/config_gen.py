@@ -11,7 +11,7 @@ default_config = {
     # The default configuration.
     "archive": {"max_lazy_archive_minutes": 10},
     "optional": {"error_channel_id": None, "feedback_channel_id": None},
-    "feature": {"playwright": True, "gui": True},
+    "feature": {"playwright": False, "gui": False},
 }
 
 
