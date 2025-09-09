@@ -191,6 +191,11 @@ class HelldiversCog(commands.Cog, TC_Cog_Mixin):
         hdoverride = hd2api.APIConfig(
             static_path="./hd2json", use_raw="direct", timeout=15
         )
+
+        api_override = bot.config.get('api', 'base')
+        if api_override:
+            hdoverride.api_direct = api_override
+
         hd2api.set_fdt(discord.utils.format_dt)
         hd2api.setuphd2logging("./logs/")
         self.img = None
