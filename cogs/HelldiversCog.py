@@ -193,8 +193,10 @@ class HelldiversCog(commands.Cog, TC_Cog_Mixin):
         )
 
         api_override = bot.config.get('api', 'base')
+        war_override = bot.config.get('api', 'war')
         if api_override:
             hdoverride.api_direct = api_override
+            hdoverride.warID = int(war_override)
 
         hd2api.set_fdt(discord.utils.format_dt)
         hd2api.setuphd2logging("./logs/")
