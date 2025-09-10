@@ -4,6 +4,7 @@ import datetime
 import json
 import os
 from typing import *
+import pydantic
 
 import gui
 from utility.debug import Timer
@@ -204,7 +205,9 @@ class ApiStatus:
                 k: p.model_dump(exclude="time_delta") for k, p in self.planets.items()
             },
             "stations": {
-                k: p.model_dump(exclude="time_delta") for k, p in self.stations.items()
+                k: p.model_dump(exclude="time_delta")
+                for k, p in self.stations.items()
+                if not isinstance(p, pydantic.BaseModel)
             },
             "dispatches": [d.model_dump(exclude="time_delta") for d in self.dispatches],
             "warall": self.warall.model_dump(exclude="time_delta"),
