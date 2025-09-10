@@ -435,7 +435,7 @@ wheels = [
 
 [[package]]
 name = "hd2api-py"
-version = "0.0.1.20.0"
+version = "0.0.1.20.1"
 source = { editable = "../hd2api.py" }
 dependencies = [
     { name = "httpx" },

@@ -192,8 +192,8 @@ class HelldiversCog(commands.Cog, TC_Cog_Mixin):
             static_path="./hd2json", use_raw="direct", timeout=15
         )
 
-        api_override = bot.config.get('api', 'base')
-        war_override = bot.config.get('api', 'war')
+        api_override = bot.config.get("api", "base")
+        war_override = bot.config.get("api", "war")
         if api_override:
             hdoverride.api_direct = api_override
             hdoverride.warID = int(war_override)
@@ -202,7 +202,10 @@ class HelldiversCog(commands.Cog, TC_Cog_Mixin):
         hd2api.setuphd2logging("./logs/")
         self.img = None
         hdoverride.client_name = bot.keys.get("hd2cli")
-        self.apistatus = hd2.ApiStatus(client=hdoverride)
+
+        do_grab_station = bot.config.get("api", "do_grab_station", fallback=True)
+
+        self.apistatus = hd2.ApiStatus(client=hdoverride, get_station=do_grab_station)
 
         self.hd2 = load_json_with_substitutions("./assets/json", "flavor.json", {}).get(
             "hd2", {}
@@ -214,7 +217,9 @@ class HelldiversCog(commands.Cog, TC_Cog_Mixin):
             try:
                 if "nowall" in snap:
                     snap.pop("nowall")
-                new_cls = hd2.ApiStatus.from_dict(snap, client=hdoverride)
+                new_cls = hd2.ApiStatus.from_dict(
+                    snap, client=hdoverride, get_station=do_grab_station
+                )
                 self.apistatus = new_cls
             except Exception as e:
                 gui.gprint(e)
