@@ -203,7 +203,7 @@ class HelldiversCog(commands.Cog, TC_Cog_Mixin):
         self.img = None
         hdoverride.client_name = bot.keys.get("hd2cli")
 
-        do_grab_station = bot.config.get("api", "do_grab_station", fallback=True)
+        do_grab_station = bot.config.getboolean("api", "do_grab_station", fallback=True)
 
         self.apistatus = hd2.ApiStatus(client=hdoverride, get_station=do_grab_station)
 
