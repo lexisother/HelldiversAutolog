@@ -435,39 +435,12 @@ wheels = [
 
 [[package]]
 name = "hd2api-py"
-version = "0.0.1.20.1"
-source = { editable = "../hd2api.py" }
+version = "0.0.1.20.3"
+source = { git = "https://github.com/CrosswaveOmega/hd2api.py#5b6870ad0ca3c764e6ddecc1b8b68d8a32d55554" }
 dependencies = [
     { name = "httpx" },
     { name = "pydantic" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "autodoc-pydantic", marker = "extra == 'docs'", specifier = "==2.2.0" },
-    { name = "bandit", extras = ["toml"], marker = "extra == 'test'", specifier = "==1.8.6" },
-    { name = "black", marker = "extra == 'test'", specifier = "==25.1.0" },
-    { name = "check-manifest", marker = "extra == 'test'", specifier = "==0.50" },
-    { name = "flake8", marker = "extra == 'test'" },
-    { name = "flake8-bugbear", marker = "extra == 'test'", specifier = "==24.12.12" },
-    { name = "flake8-docstrings", marker = "extra == 'test'" },
-    { name = "flake8-formatter-junit-xml", marker = "extra == 'test'" },
-    { name = "flake8-pyproject", marker = "extra == 'test'" },
-    { name = "httpx", specifier = ">=0.27.2" },
-    { name = "pre-commit", marker = "extra == 'test'", specifier = "==4.3.0" },
-    { name = "pydantic", specifier = ">=2.9.2" },
-    { name = "pylint", marker = "extra == 'test'", specifier = "==3.3.8" },
-    { name = "pylint-junit", marker = "extra == 'test'" },
-    { name = "pyspark", marker = "extra == 'spark'", specifier = ">=4.0.0" },
-    { name = "pytest", marker = "extra == 'test'", specifier = "==8.4.1" },
-    { name = "pytest-asyncio", marker = "extra == 'test'", specifier = "==1.1.0" },
-    { name = "pytest-cov", marker = "extra == 'test'", specifier = "==6.2.1" },
-    { name = "pytest-github-actions-annotate-failures", marker = "extra == 'test'" },
-    { name = "pytest-mock", marker = "extra == 'test'", specifier = "<3.14.0" },
-    { name = "pytest-runner", marker = "extra == 'test'" },
-    { name = "shellcheck-py", marker = "extra == 'test'", specifier = "==0.11.0.1" },
-]
-provides-extras = ["spark", "test", "docs"]
 
 [[package]]
 name = "httpcore"
@@ -572,6 +545,32 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/70/09/d904a6e96f76ff214be59e7aa6ef7190008f52a0ab6689760a98de0bf37d/keyring-25.6.0.tar.gz", hash = "sha256:0b39998aa941431eb3d9b0d4b2460bc773b9df6fed7621c2dfb291a7e0187a66", size = 62750, upload-time = "2024-12-25T15:26:45.782Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d3/32/da7f44bcb1105d3e88a0b74ebdca50c59121d2ddf71c9e34ba47df7f3a56/keyring-25.6.0-py3-none-any.whl", hash = "sha256:552a3f7af126ece7ed5c89753650eec89c7eaae8617d0aa4d9ad2b75111266bd", size = 39085, upload-time = "2024-12-25T15:26:44.377Z" },
+]
+
+[[package]]
+name = "keyring-pass"
+version = "0.9.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "jaraco-classes" },
+    { name = "keyring" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2a/64/08f9a85a0a91410e45de7de060bd00c8ee94262866969fc02fcd57681e55/keyring_pass-0.9.3.tar.gz", hash = "sha256:ca88c045fd8b4986301c5aa43ad4c0ff142d990a2ad6c142aeb1515502a22235", size = 4659, upload-time = "2024-03-08T08:12:05.099Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7b/89/aefd1de31f1532801cc7268525eeee6d1df1615b8d1ebdfa49814ec51ab7/keyring_pass-0.9.3-py3-none-any.whl", hash = "sha256:61cf6f8f4363cee09c11b9ab35f2b29f109386fbd8a697dd149d90ad76325f83", size = 5523, upload-time = "2024-03-08T08:12:03.217Z" },
+]
+
+[[package]]
+name = "keyrings-alt"
+version = "5.0.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "jaraco-classes" },
+    { name = "jaraco-context" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/7b/e3bf53326e0753bee11813337b1391179582ba5c6851b13e0d9502d15a50/keyrings_alt-5.0.2.tar.gz", hash = "sha256:8f097ebe9dc8b185106502b8cdb066c926d2180e13b4689fd4771a3eab7d69fb", size = 29229, upload-time = "2024-08-14T01:09:28.12Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4a/0d/9c59313ab43d0858a9a665e80763bd830dc78d5f379afc3815e123c486c2/keyrings.alt-5.0.2-py3-none-any.whl", hash = "sha256:6be74693192f3f37bbb752bfac9b86e6177076b17d2ac12a390f1d6abff8ac7c", size = 17930, upload-time = "2024-08-14T01:09:26.785Z" },
 ]
 
 [[package]]
@@ -777,6 +776,8 @@ dependencies = [
     { name = "discord-py" },
     { name = "hd2api-py" },
     { name = "keyring" },
+    { name = "keyring-pass" },
+    { name = "keyrings-alt" },
     { name = "lxml" },
     { name = "markdown" },
     { name = "matplotlib" },
@@ -796,8 +797,10 @@ dependencies = [
 requires-dist = [
     { name = "aiosqlite", specifier = ">=0.21.0" },
     { name = "discord-py", specifier = ">=2.6.3" },
-    { name = "hd2api-py", editable = "../hd2api.py" },
+    { name = "hd2api-py", git = "https://github.com/CrosswaveOmega/hd2api.py" },
     { name = "keyring", specifier = ">=25.6.0" },
+    { name = "keyring-pass", specifier = ">=0.9.3" },
+    { name = "keyrings-alt", specifier = ">=5.0.2" },
     { name = "lxml", specifier = ">=5.4.0" },
     { name = "markdown", specifier = ">=3.9" },
     { name = "matplotlib", specifier = ">=3.10.6" },
