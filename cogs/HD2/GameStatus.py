@@ -622,7 +622,10 @@ class ApiStatus:
 
         diver_amount = total_contrib[0]
         total_players = all_players.statistics.playerCount
-        diverpercent = round((total_contrib[0] / total_players) * 100.0, 4)
+        if total_contrib[0] == 0:
+            diverpercent = 0
+        else:
+            diverpercent = round((total_contrib[0] / total_players) * 100.0, 4)
         total_contrib2 = round(total_contrib[1], 4)
         per_second = round(total_contrib[4], 8)
 
