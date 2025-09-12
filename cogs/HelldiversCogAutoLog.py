@@ -131,12 +131,15 @@ class Events:
         self.lastStatus: Dict[str, Any] = {}
         self.evt: List[GameEvent] = []
         self.trig: List[str] = []
+        self.hdml = ""
         self.ret = None
 
     def add_event(self, event: GameEvent, key: str) -> None:
         self.evt.append(event)
         if event.mode in [EventModes.NEW, EventModes.REMOVE]:
             self.ret = event.value.retrieved_at
+            if event.place == "news":
+                self.hdml = hdml_parse(event.value.message).replace("\n", " ")
         elif event.mode == EventModes.CHANGE:
             self.ret = event.value[0].retrieved_at
 
@@ -199,6 +202,18 @@ class PlanetEvents(Events):
             self.lastInfo = _
             self.planet.waypoints = v.waypoints
             self.ret = v.retrieved_at
+
+    def add_event(self, event: GameEvent, key: str) -> None:
+        self.evt.append(event)
+        if event.mode in [EventModes.NEW, EventModes.REMOVE]:
+            self.ret = event["value"].retrieved_at
+            if event["place"] == "planetevents":
+                self.planet_event = event["value"]
+        elif event.mode == EventModes.CHANGE:
+            self.ret = event["value"][0].retrieved_at
+
+        if key not in self.trig:
+            self.trig.append(key)
 
 
 class SectorEvents(Events):
